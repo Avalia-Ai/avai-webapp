@@ -5,9 +5,7 @@ export class CreateProfessorTable1705707429480 implements MigrationInterface {
     await queryRunner.query(`
             CREATE TABLE "Professor" (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP NOT NULL
-                )`);
+                name VARCHAR(255) NOT NULL);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
