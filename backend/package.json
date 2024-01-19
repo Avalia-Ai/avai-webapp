@@ -12,7 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^4.25.2"
+    "dotenv": "^16.3.2",
+    "fastify": "^4.25.2",
+    "pg": "^8.11.3",
+    "typeorm": "^0.3.19"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
