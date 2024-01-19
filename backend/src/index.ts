@@ -1,25 +1,7 @@
 import fastify from "fastify";
-import { env } from "process";
 import "reflect-metadata";
-import { DataSource, DataSourceOptions } from "typeorm";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const dbConfig: DataSourceOptions = {
-  type: "postgres",
-  host: env.DB_HOST,
-  port: Number(env.DB_PORT),
-  username: env.DB_USERNAME,
-  password: env.DB_PASSWORD,
-  database: env.DB_NAME,
-  synchronize: true,
-  logging: false,
-  entities: ["src/entities/**/*.ts"],
-  migrations: ["src/migrations/**/*.ts"],
-};
-
-const dataSource = new DataSource(dbConfig);
+import { dataSource } from "./dataSource";
+import { dbConfig } from "./dbconfig";
 
 await dataSource
   .initialize()
