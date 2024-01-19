@@ -1,4 +1,6 @@
 import fastify from "fastify";
+import "reflect-metadata";
+
 const server = fastify();
 
 server.listen({ port: 8080 }, (err, address) => {
