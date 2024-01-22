@@ -19,9 +19,9 @@ export class SubjectReview {
   @OneToMany(() => User, (user) => user.id, { nullable: false })
   userId: number;
 
-  @Column({ nullable: false, type: Date })
+  @Column({ nullable: false, type: Date, name: "created_at" })
   createdAt: Date;
 
-  @Column({ nullable: false, type: Date })
+  @Column({ nullable: false, type: Date, name: "updated_at" })
   updatedAt: Date;
 }

@@ -2,6 +2,7 @@ import fastify from "fastify";
 import "reflect-metadata";
 import { dataSource } from "./dataSource.ts";
 import { dbConfig } from "./dbconfig.ts";
+import routes from "./routes.ts";
 
 await dataSource
   .initialize()
@@ -18,6 +19,8 @@ await dataSource
   });
 
 const server = fastify();
+
+routes.forEach((route) => server.route(route));
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {

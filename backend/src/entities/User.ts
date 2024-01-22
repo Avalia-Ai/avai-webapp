@@ -8,7 +8,7 @@ export class User {
   @Column({ nullable: false, type: "varchar" })
   name: string;
 
-  @Column({ nullable: false, type: "date" })
+  @Column({ nullable: false, type: "date", name: "entering_semester" })
   enteringSemester: Date;
 
   @Column({ nullable: false, type: "varchar" })
@@ -17,6 +17,6 @@ export class User {
   @Column({ nullable: false, type: "varchar" })
   password: string;
 
-  @Column({ nullable: false, type: "date" })
+  @Column({ nullable: false, type: "date", name: "created_at" })
   createdAt: Date;
 }
