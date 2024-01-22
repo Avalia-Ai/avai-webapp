@@ -3,10 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig.json && node src/index.js",
+    "build": "ts-node-esm my_server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:run": "npx ts-node --esm ./node_modules/typeorm/cli.js migration:run -d src/dataSource.ts",
     "migration:revert": "npx ts-node --esm ./node_modules/typeorm/cli.js migration:revert -d src/dataSource.ts"

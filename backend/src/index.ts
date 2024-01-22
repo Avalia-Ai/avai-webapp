@@ -1,7 +1,7 @@
 import fastify from "fastify";
 import "reflect-metadata";
-import { dataSource } from "./dataSource";
-import { dbConfig } from "./dbconfig";
+import { dataSource } from "./dataSource.ts";
+import { dbConfig } from "./dbconfig.ts";
 
 await dataSource
   .initialize()
