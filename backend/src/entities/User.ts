@@ -5,18 +5,18 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar" })
   name: string;
 
-  @Column()
-  entering_semester: Date;
+  @Column({ nullable: false, type: "date" })
+  enteringSemester: Date;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar" })
   email: string;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar" })
   password: string;
 
-  @Column()
-  created_at: Date;
+  @Column({ nullable: false, type: "date" })
+  createdAt: Date;
 }

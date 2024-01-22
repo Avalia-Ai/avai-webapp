@@ -5,12 +5,12 @@ export class Subject {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar" })
   name: string;
 
-  @Column()
+  @Column({ nullable: true, type: "varchar" })
   semester: string;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar" })
   mandatory: boolean;
 }

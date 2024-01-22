@@ -5,6 +5,6 @@ export class Professor {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false, type: "varchar" })
   name: string;
 }
