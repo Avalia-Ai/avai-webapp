@@ -8,8 +8,8 @@ export class Subject {
   @Column({ nullable: false, type: "varchar" })
   name: string;
 
-  @Column({ nullable: true, type: "varchar" })
-  semester: string;
+  @Column({ nullable: true, type: "integer" })
+  semester: number;
 
   @Column({ nullable: false, type: "varchar" })
   mandatory: boolean;
