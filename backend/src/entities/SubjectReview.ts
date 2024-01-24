@@ -14,7 +14,7 @@ export class SubjectReview {
   id: number;
 
   @OneToOne(() => Subject, (subject) => subject.id, { nullable: false })
-  subjectId: number;
+  subjectProfessorId: number;
 
   @OneToMany(() => User, (user) => user.id, { nullable: false })
   userId: number;
