@@ -9,4 +9,10 @@ export class SubjectRepository {
   public async getAllSubjects() {
     return dataSource.manager.find(Subject);
   }
+
+  public async findById(id: number) {
+    return dataSource.manager.findOne(Subject, {
+      where: { id },
+    });
+  }
 }

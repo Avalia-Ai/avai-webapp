@@ -1,11 +1,10 @@
 import { SubjectReviewDTO } from "../DTOs/SubjectReviewDTO.ts";
-import { SubjectReview } from "../entities/SubjectReview.ts";
 
 export class SubjectReviewMapper {
   public static validateReviewCreateRequest(
     subjectReviewDTO: SubjectReviewDTO[]
   ) {
-    const reviews = subjectReviewDTO.map((subjectDTO): SubjectReview => {
+    subjectReviewDTO.forEach((subjectDTO) => {
       const { subjectProfessorId, userId } = subjectDTO;
 
       if (!subjectProfessorId) {
@@ -15,11 +14,6 @@ export class SubjectReviewMapper {
       if (!userId) {
         throw new Error("userId is required");
       }
-      const review = new SubjectReview();
-      review.subjectProfessorId = subjectProfessorId;
-      review.userId = userId;
-      return review;
     });
-    return reviews;
   }
 }

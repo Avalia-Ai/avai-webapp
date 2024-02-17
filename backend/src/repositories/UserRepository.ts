@@ -10,4 +10,11 @@ export class UserRepository {
       return "Error inserting user" + error;
     }
   }
+
+  public async findById(id: number) {
+    return dataSource.manager.findOne(User, {
+      select: ["id", "name", "email"],
+      where: { id },
+    });
+  }
 }

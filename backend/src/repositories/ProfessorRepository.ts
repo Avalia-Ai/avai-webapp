@@ -9,4 +9,10 @@ export class ProfessorRepository {
   public async getProfessors() {
     return dataSource.manager.find(Professor);
   }
+
+  public async findById(id: number) {
+    return dataSource.manager.findOne(Professor, {
+      where: { id },
+    });
+  }
 }
