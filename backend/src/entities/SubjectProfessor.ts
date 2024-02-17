@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, OneToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
 import { Subject } from "./Subject.ts";
 import { Professor } from "./Professor.ts";
 
@@ -7,9 +7,11 @@ export class SubjectProfessor {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Subject, (subject) => subject.id, { nullable: false })
-  subjectId: number;
+  @OneToOne(() => Subject, { nullable: false, eager: true })
+  @JoinColumn({ name: "subject_id" })
+  subject: Subject;
 
-  @OneToMany(() => Professor, (professor) => professor.id, { nullable: false })
-  professorId: number;
+  @OneToOne(() => Professor, { nullable: false, eager: true })
+  @JoinColumn({ name: "professor_id" })
+  professor: Professor;
 }

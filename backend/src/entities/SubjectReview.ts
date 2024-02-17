@@ -1,11 +1,12 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  OneToMany,
   Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { Subject } from "./Subject.ts";
+import { SubjectProfessor } from "./SubjectProfessor.ts";
 import { User } from "./User.ts";
 
 @Entity()
@@ -13,15 +14,17 @@ export class SubjectReview {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Subject, (subject) => subject.id, { nullable: false })
-  subjectProfessorId: number;
+  @OneToOne(() => SubjectProfessor, { nullable: false, eager: true })
+  @JoinColumn({ name: "subject_professor_id" })
+  subjectProfessor: SubjectProfessor;
 
-  @OneToMany(() => User, (user) => user.id, { nullable: false })
-  userId: number;
+  @ManyToOne(() => User, (user) => user.id, { nullable: false })
+  @JoinColumn({ name: "user_id" })
+  user: User;
 
-  @Column({ nullable: false, type: Date, name: "created_at" })
+  @Column({ nullable: false, type: "timestamp", name: "created_at" })
   createdAt: Date;
 
-  @Column({ nullable: false, type: Date, name: "updated_at" })
+  @Column({ nullable: false, type: "timestamp", name: "updated_at" })
   updatedAt: Date;
 }
