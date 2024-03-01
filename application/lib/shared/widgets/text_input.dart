@@ -12,6 +12,8 @@ class AVAITextInput extends StatelessWidget {
   final bool allowSpecialCharacters;
   final bool allowSpaces;
   final String? Function(String?)? validatorFunction;
+  final void Function(dynamic value) onChanged;
+
   const AVAITextInput({
     super.key,
     this.label = '',
@@ -21,6 +23,7 @@ class AVAITextInput extends StatelessWidget {
     this.allowSpecialCharacters = true,
     this.allowSpaces = true,
     this.validatorFunction,
+    required this.onChanged,
   });
 
   @override
@@ -39,6 +42,7 @@ class AVAITextInput extends StatelessWidget {
         TextFormField(
           validator: validatorFunction,
           obscureText: isPasswordField,
+          onChanged: onChanged,
           inputFormatters: [
             CustomTextInputFormatter(
               allowNumbers: allowNumbers,

@@ -4,21 +4,45 @@ import 'package:avalia_ai/shared/widgets/navigation_button.dart';
 import 'package:avalia_ai/shared/widgets/text_input.dart';
 import 'package:avalia_ai/shared/styles/text_styles.dart';
 import 'package:avalia_ai/shared/styles/colors.dart';
+import 'package:avalia_ai/view/auth_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthPage extends StatelessWidget {
   final bool register;
-  const AuthPage({super.key, this.register = false});
+  final SupabaseClient client;
+
+  const AuthPage._({
+    Key? key,
+    this.register = false,
+    required this.client,
+  }) : super(key: key);
+
+  factory AuthPage({
+    Key? key,
+    bool register = false,
+    SupabaseClient? client,
+  }) {
+    return AuthPage._(
+      key: key,
+      register: register,
+      client: client ??
+          SupabaseClient(dotenv.env['BASE_URL']!, dotenv.env['API_KEY']!),
+    );
+  }
 
   Widget buildPersonalInfoInputs(semesterOptions) {
     return Column(
       children: [
-        const AVAITextInput(
+        AVAITextInput(
           label: 'Nome completo',
           placeholder: 'José da Silva',
           allowNumbers: false,
           allowSpecialCharacters: false,
+          onChanged: (value) => {},
         ),
         const SizedBox(height: 24),
         AVAIDropdown(
@@ -37,20 +61,24 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  Widget buildIdentifiersInput() {
-    return const Column(
+  Widget buildIdentifiersInput(BuildContext context) {
+    return Column(
       children: [
         AVAITextInput(
           label: 'E-mail institucional',
           placeholder: 'nome@ic.ufrj.br',
           allowNumbers: true,
           allowSpaces: false,
+          onChanged: (value) =>
+              Provider.of<AuthModel>(context, listen: false).setEmail(value),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         AVAITextInput(
           label: 'Senha',
           placeholder: '••••••',
           isPasswordField: true,
+          onChanged: (value) =>
+              Provider.of<AuthModel>(context, listen: false).setPassword(value),
         ),
       ],
     );
@@ -185,13 +213,13 @@ class AuthPage extends StatelessWidget {
                           const SizedBox(height: 32),
                           if (register) ...[
                             buildPersonalInfoInputs(semesterOptions),
-                            buildIdentifiersInput(),
+                            buildIdentifiersInput(context),
                             const SizedBox(
                               height: 24,
                             ),
                             buildTermsOfUse(),
                           ] else ...[
-                            buildIdentifiersInput(),
+                            buildIdentifiersInput(context),
                             const SizedBox(
                               height: 16,
                             ),
@@ -201,8 +229,15 @@ class AuthPage extends StatelessWidget {
                             ),
                             AVAIButton(
                               label: 'Entrar',
-                              onPressed: () =>
-                                  {Navigator.pushNamed(context, '/home')},
+                              onPressed: () async {
+                                final authModel = Provider.of<AuthModel>(
+                                    context,
+                                    listen: false);
+                                final email = authModel.email;
+                                final password = authModel.password;
+                                await signInUser(context,
+                                    email: email, password: password);
+                              },
                             ),
                           ],
                         ],
@@ -238,5 +273,25 @@ class AuthPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> signUpUser(context, {String? email, String? password}) async {
+    final result = await client.auth.signUp(email: email!, password: password!);
+    if (result.user != null) {
+      Navigator.pushReplacementNamed(context, 'login');
+    }
+  }
+
+  Future<void> signInUser(context, {String? email, String? password}) async {
+    final result = await client.auth
+        .signInWithPassword(email: email!, password: password!);
+    if (result.user != null) {
+      Navigator.pushReplacementNamed(context, '/home');
+    }
+  }
+
+  Future<void> logout(context) async {
+    await client.auth.signOut();
+    Navigator.pushReplacementNamed(context, 'login');
   }
 }
