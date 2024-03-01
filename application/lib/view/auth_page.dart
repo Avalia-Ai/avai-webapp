@@ -62,6 +62,7 @@ class AuthPage extends StatelessWidget {
   }
 
   Widget buildIdentifiersInput(BuildContext context) {
+    final authProvider = Provider.of<AuthModel>(context, listen: false);
     return Column(
       children: [
         AVAITextInput(
@@ -69,16 +70,14 @@ class AuthPage extends StatelessWidget {
           placeholder: 'nome@ic.ufrj.br',
           allowNumbers: true,
           allowSpaces: false,
-          onChanged: (value) =>
-              Provider.of<AuthModel>(context, listen: false).setEmail(value),
+          onChanged: (value) => authProvider.setEmail(value),
         ),
         const SizedBox(height: 24),
         AVAITextInput(
           label: 'Senha',
           placeholder: '••••••',
           isPasswordField: true,
-          onChanged: (value) =>
-              Provider.of<AuthModel>(context, listen: false).setPassword(value),
+          onChanged: (value) => authProvider.setPassword(value),
         ),
       ],
     );
