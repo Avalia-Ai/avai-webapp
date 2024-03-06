@@ -232,10 +232,10 @@ class AuthPage extends StatelessWidget {
                                 final authModel = Provider.of<AuthModel>(
                                     context,
                                     listen: false);
-                                final email = authModel.email;
-                                final password = authModel.password;
+                                final email = authModel.emailController;
+                                final password = authModel.passwordController;
                                 await signInUser(context,
-                                    email: email, password: password);
+                                    email: email.text, password: password.text);
                               },
                             ),
                           ],

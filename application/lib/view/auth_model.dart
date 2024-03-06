@@ -6,18 +6,13 @@ class AuthModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String get email => _email;
-  String get password => _password;
-
   void setEmail(String value) {
-    print(value);
-    _email = value;
+    emailController.text = _email;
     notifyListeners();
   }
 
   void setPassword(String value) {
-    print(value);
-    _password = value;
+    passwordController.text = _password;
     notifyListeners();
   }
 }
