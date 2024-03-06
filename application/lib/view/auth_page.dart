@@ -26,6 +26,7 @@ class AuthPage extends StatelessWidget {
     bool register = false,
     SupabaseClient? client,
   }) {
+
     return AuthPage._(
       key: key,
       register: register,
@@ -34,7 +35,7 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  Widget buildPersonalInfoInputs(semesterOptions) {
+  Widget buildPersonalInfoInputs(semesterOptions, AuthModel authModel) {
     return Column(
       children: [
         AVAITextInput(
@@ -42,7 +43,7 @@ class AuthPage extends StatelessWidget {
           placeholder: 'José da Silva',
           allowNumbers: false,
           allowSpecialCharacters: false,
-          onChanged: (value) => {},
+        textEditingController: authModel.usernameController,
         ),
         const SizedBox(height: 24),
         AVAIDropdown(
@@ -61,8 +62,7 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  Widget buildIdentifiersInput(BuildContext context) {
-    final authProvider = Provider.of<AuthModel>(context, listen: false);
+  Widget buildIdentifiersInput(AuthModel authModel) {
     return Column(
       children: [
         AVAITextInput(
@@ -70,14 +70,14 @@ class AuthPage extends StatelessWidget {
           placeholder: 'nome@ic.ufrj.br',
           allowNumbers: true,
           allowSpaces: false,
-          textEditingController: authProvider.emailController,
+          textEditingController: authModel.emailController,
         ),
         const SizedBox(height: 24),
         AVAITextInput(
           label: 'Senha',
           placeholder: '••••••',
           isPasswordField: true,
-          textEditingController: authProvider.passwordController,
+          textEditingController: authModel.passwordController,
         ),
       ],
     );
@@ -170,6 +170,7 @@ class AuthPage extends StatelessWidget {
       backgroundColor: AVAIColors.white50,
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          final authModel = Provider.of<AuthModel>(context, listen: false);
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -211,14 +212,14 @@ class AuthPage extends StatelessWidget {
                         children: [
                           const SizedBox(height: 32),
                           if (register) ...[
-                            buildPersonalInfoInputs(semesterOptions),
-                            buildIdentifiersInput(context),
+                            buildPersonalInfoInputs(semesterOptions, authModel),
+                            buildIdentifiersInput(authModel),
                             const SizedBox(
                               height: 24,
                             ),
                             buildTermsOfUse(),
                           ] else ...[
-                            buildIdentifiersInput(context),
+                            buildIdentifiersInput(authModel),
                             const SizedBox(
                               height: 16,
                             ),
@@ -228,10 +229,8 @@ class AuthPage extends StatelessWidget {
                             ),
                             AVAIButton(
                               label: 'Entrar',
+                              authModel: authModel,
                               onPressed: () async {
-                                final authModel = Provider.of<AuthModel>(
-                                    context,
-                                    listen: false);
                                 final email = authModel.emailController;
                                 final password = authModel.passwordController;
                                 await signInUser(context,
@@ -254,7 +253,15 @@ class AuthPage extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 36),
                         child: AVAIButton(
                           label: 'Cadastrar',
-                          onPressed: () => {},
+                          authModel: authModel,
+                          onPressed: () async {
+                            final email = authModel.emailController;
+                            final username = authModel.usernameController;
+                            final password = authModel.passwordController;
+                            print (email.text);
+                            print(username.text);
+                            print(password.text);
+                          },
                         ),
                       )
                     ] else ...[
