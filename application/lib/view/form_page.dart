@@ -4,8 +4,6 @@ import 'package:avalia_ai/shared/styles/text_styles.dart';
 import 'package:avalia_ai/shared/widgets/button.dart';
 import 'package:avalia_ai/shared/widgets/dropdown.dart';
 import 'package:avalia_ai/shared/widgets/navigation_button.dart';
-import 'package:avalia_ai/shared/widgets/text_input.dart';
-import 'package:avalia_ai/view/warning_modal.dart';
 import 'package:flutter/material.dart';
 
 class FormPage extends StatelessWidget {
