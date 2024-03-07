@@ -27,9 +27,7 @@ class AVAIButton extends StatelessWidget {
         child: Text(
           label,
           textAlign: TextAlign.center,
-          style:
-              // TODO: Change the textSTyle to AVAITextStyle.label
-              AVAITextStyle(
+          style: AVAITextStyle(
             color: secondary ? AVAIColors.royalBlue : AVAIColors.white100,
           ).action,
         ),

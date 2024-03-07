@@ -1,7 +1,6 @@
 import 'package:avalia_ai/shared/styles/colors.dart';
 import 'package:avalia_ai/shared/styles/shadows.dart';
 import 'package:avalia_ai/shared/styles/text_styles.dart';
-import 'package:avalia_ai/shared/widgets/button.dart';
 import 'package:avalia_ai/shared/widgets/dropdown.dart';
 import 'package:avalia_ai/shared/widgets/navigation_button.dart';
 import 'package:avalia_ai/view/warning_modal.dart';

@@ -7,13 +7,13 @@ class AVAITextStyle {
   AVAITextStyle({Color? color}) : color = color ?? AVAIColors.darkGrey;
 
   TextStyle get title => TextStyle(
-        fontSize: 18,
+        fontSize: 20,
         color: color,
         fontWeight: FontWeight.w600,
       );
 
   TextStyle get subtitle => TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         color: color,
         fontWeight: FontWeight.w400,
       );
@@ -25,13 +25,13 @@ class AVAITextStyle {
       );
 
   TextStyle get content => TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         color: color,
         fontWeight: FontWeight.w400,
       );
 
   TextStyle get mediumContent => TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         color: color,
         fontWeight: FontWeight.w500,
       );
@@ -49,13 +49,13 @@ class AVAITextStyle {
       );
 
   TextStyle get placeholder => TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: FontWeight.w400,
         color: AVAIColors.grey,
       );
 
   TextStyle get link => TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         color: color,
         decoration: TextDecoration.underline,
         fontWeight: FontWeight.w600,

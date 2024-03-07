@@ -5,12 +5,12 @@ import 'package:avalia_ai/shared/widgets/navigation_button.dart';
 import 'package:flutter/material.dart';
 
 class ProfessorsPage extends StatelessWidget {
-  String subjectId;
-  ProfessorsPage({super.key, required this.subjectId});
+  final String subjectId;
+
+  const ProfessorsPage({super.key, required this.subjectId});
 
   @override
   Widget build(BuildContext context) {
-    print(subjectId);
     final test = [
       'professor 1',
       'professor 2',
@@ -55,10 +55,14 @@ class ProfessorsPage extends StatelessWidget {
                           child: Center(
                             child: Container(
                               constraints: const BoxConstraints(
-                                  minWidth: 288, maxWidth: 420),
+                                minWidth: 288,
+                                maxWidth: 420,
+                              ),
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 24),
+                                horizontal: 16,
+                                vertical: 32,
+                              ),
                               decoration: BoxDecoration(
                                 color: AVAIColors.white100,
                                 borderRadius: BorderRadius.circular(12),
@@ -67,9 +71,9 @@ class ProfessorsPage extends StatelessWidget {
                               child: Text(
                                 'Nome da disciplina',
                                 textAlign: TextAlign.center,
-                                style:
-                                    AVAITextStyle(color: AVAIColors.royalBlue)
-                                        .title,
+                                style: AVAITextStyle(
+                                  color: AVAIColors.royalBlue,
+                                ).title,
                               ),
                             ),
                           ),
@@ -91,7 +95,9 @@ class ProfessorsPage extends StatelessWidget {
                               margin: const EdgeInsets.only(top: 12),
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 16),
+                                horizontal: 12,
+                                vertical: 16,
+                              ),
                               decoration: BoxDecoration(
                                 color: AVAIColors.white100,
                                 borderRadius: BorderRadius.circular(6),

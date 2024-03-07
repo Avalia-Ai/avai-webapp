@@ -2,6 +2,7 @@ import 'package:avalia_ai/view/auth_page.dart';
 import 'package:avalia_ai/view/homepage.dart';
 import 'package:avalia_ai/view/initial_page.dart';
 import 'package:avalia_ai/view/professors_page.dart';
+import 'package:avalia_ai/view/reset_password_page.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
@@ -28,12 +29,21 @@ class FluroRoute {
   );
 
   static final Handler homepageHandler = Handler(
-      handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
-          const HomePage());
+    handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
+        const HomePage(),
+  );
 
   static final Handler professorsPageHandler = Handler(
-      handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
-          ProfessorsPage(subjectId: params['subjectId'][0]));
+    handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
+        ProfessorsPage(
+      subjectId: params['subjectId'][0],
+    ),
+  );
+
+  static final Handler resetPasswordHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
+        const ResetPasswordPage(),
+  );
 
   static void setupRouter() {
     router.define(
@@ -59,6 +69,11 @@ class FluroRoute {
     router.define(
       '/professors/:subjectId',
       handler: professorsPageHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+    router.define(
+      '/reset-password',
+      handler: resetPasswordHandler,
       transitionType: TransitionType.fadeIn,
     );
   }
