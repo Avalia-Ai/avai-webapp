@@ -56,14 +56,14 @@ class ResetPasswordPage extends StatelessWidget {
       constraints: const BoxConstraints(
         maxWidth: 560,
       ),
-      margin: const EdgeInsets.only(top: 24, bottom: 48),
+      margin: const EdgeInsets.only(bottom: 48),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
             'assets/images/safe.png',
-            height: 420,
+            height: 320,
           ),
           Text(
             'Por favor, insira o endereço de email associado à sua conta. Enviaremos um código de verificação para este endereço para prosseguir com a recuperação de senha.',
@@ -77,7 +77,6 @@ class ResetPasswordPage extends StatelessWidget {
           ),
           const SizedBox(height: 48),
           AVAIButton(label: 'Enviar', onPressed: () {}),
-          const SizedBox(height: 48),
         ],
       ),
     );
