@@ -119,7 +119,6 @@ class AuthPage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: InkWell(
-        // TODO: go to forgot password page
         onTap: () => {Navigator.pushNamed(context, '/reset-password')},
         child: Text(
           'Esqueci a senha',
