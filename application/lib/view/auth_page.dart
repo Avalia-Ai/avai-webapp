@@ -4,21 +4,48 @@ import 'package:avalia_ai/shared/widgets/navigation_button.dart';
 import 'package:avalia_ai/shared/widgets/text_input.dart';
 import 'package:avalia_ai/shared/styles/text_styles.dart';
 import 'package:avalia_ai/shared/styles/colors.dart';
+import 'package:avalia_ai/view/auth_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthPage extends StatelessWidget {
   final bool register;
-  const AuthPage({super.key, this.register = false});
+  final SupabaseClient client;
 
-  Widget buildPersonalInfoInputs(semesterOptions) {
+  String email = '';
+  String password = '';
+
+  AuthPage._({
+    Key? key,
+    this.register = false,
+    required this.client,
+  }) : super(key: key);
+
+  factory AuthPage({
+    Key? key,
+    bool register = false,
+    SupabaseClient? client,
+  }) {
+    return AuthPage._(
+      key: key,
+      register: register,
+      client: client ??
+          SupabaseClient(dotenv.env['BASE_URL']!, dotenv.env['API_KEY']!),
+    );
+  }
+
+  Widget buildPersonalInfoInputs(semesterOptions, AuthModel authModel) {
     return Column(
       children: [
-        const AVAITextInput(
+        AVAITextInput(
           label: 'Nome completo',
           placeholder: 'José da Silva',
           allowNumbers: false,
           allowSpecialCharacters: false,
+          textEditingController: authModel.usernameController,
         ),
         const SizedBox(height: 24),
         AVAIDropdown(
@@ -37,20 +64,22 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  Widget buildIdentifiersInput() {
-    return const Column(
+  Widget buildIdentifiersInput(AuthModel authModel) {
+    return Column(
       children: [
         AVAITextInput(
           label: 'E-mail institucional',
           placeholder: 'nome@ic.ufrj.br',
           allowNumbers: true,
           allowSpaces: false,
+          onChanged: (value) => email = value,
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         AVAITextInput(
           label: 'Senha',
           placeholder: '••••••',
           isPasswordField: true,
+          onChanged: (value) => password = value,
         ),
       ],
     );
@@ -142,6 +171,7 @@ class AuthPage extends StatelessWidget {
       backgroundColor: AVAIColors.white50,
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          final authModel = Provider.of<AuthModel>(context, listen: false);
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -183,14 +213,14 @@ class AuthPage extends StatelessWidget {
                         children: [
                           const SizedBox(height: 32),
                           if (register) ...[
-                            buildPersonalInfoInputs(semesterOptions),
-                            buildIdentifiersInput(),
+                            buildPersonalInfoInputs(semesterOptions, authModel),
+                            buildIdentifiersInput(authModel),
                             const SizedBox(
                               height: 24,
                             ),
                             buildTermsOfUse(),
                           ] else ...[
-                            buildIdentifiersInput(),
+                            buildIdentifiersInput(authModel),
                             const SizedBox(
                               height: 16,
                             ),
@@ -200,8 +230,18 @@ class AuthPage extends StatelessWidget {
                             ),
                             AVAIButton(
                               label: 'Entrar',
-                              onPressed: () =>
-                                  {Navigator.pushNamed(context, '/home')},
+                              authModel: authModel,
+                              onPressed: () async {
+                                final authProvider = Provider.of<AuthModel>(
+                                    context,
+                                    listen: false);
+
+                                authProvider.setEmail(email);
+                                authProvider.setPassword(password);
+
+                                await signInUser(context,
+                                    email: email, password: password);
+                              },
                             ),
                           ],
                         ],
@@ -219,7 +259,12 @@ class AuthPage extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 36),
                         child: AVAIButton(
                           label: 'Cadastrar',
-                          onPressed: () => {},
+                          authModel: authModel,
+                          onPressed: () async {
+                            final email = authModel.emailController;
+                            final username = authModel.usernameController;
+                            final password = authModel.passwordController;
+                          },
                         ),
                       )
                     ] else ...[
@@ -237,5 +282,25 @@ class AuthPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<void> signUpUser(context, {String? email, String? password}) async {
+    final result = await client.auth.signUp(email: email!, password: password!);
+    if (result.user != null) {
+      Navigator.pushReplacementNamed(context, 'login');
+    }
+  }
+
+  Future<void> signInUser(context, {String? email, String? password}) async {
+    final result = await client.auth
+        .signInWithPassword(email: email!, password: password!);
+    if (result.user != null) {
+      Navigator.pushReplacementNamed(context, '/home');
+    }
+  }
+
+  Future<void> logout(context) async {
+    await client.auth.signOut();
+    Navigator.pushReplacementNamed(context, 'login');
   }
 }

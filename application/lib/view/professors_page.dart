@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 
 class ProfessorsPage extends StatelessWidget {
   final String subjectId;
-
-  const ProfessorsPage({super.key, required this.subjectId});
+  ProfessorsPage({super.key, required this.subjectId});
 
   @override
   Widget build(BuildContext context) {

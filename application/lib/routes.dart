@@ -16,14 +16,14 @@ class FluroRoute {
 
   static final Handler registerHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
-        const AuthPage(
+        AuthPage(
       register: true,
     ),
   );
 
   static final Handler loginHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
-        const AuthPage(
+        AuthPage(
       register: false,
     ),
   );
