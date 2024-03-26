@@ -5,7 +5,7 @@ import 'package:avalia_ai/shared/widgets/navigation_button.dart';
 import 'package:flutter/material.dart';
 
 class ProfessorsPage extends StatelessWidget {
-  String subjectId;
+  final String subjectId;
   ProfessorsPage({super.key, required this.subjectId});
 
   @override

@@ -28,10 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter_dotenv: ^5.1.0
-  supabase_flutter: ^2.0.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
+  supabase_flutter: ^2.0.0
   http: ^0.13.3
 
   dropdown_button2: ^2.3.9

@@ -1,4 +1,5 @@
 import 'package:avalia_ai/shared/styles/text_styles.dart';
+import 'package:avalia_ai/view/auth_model.dart';
 import 'package:flutter/material.dart';
 import 'package:avalia_ai/shared/styles/colors.dart';
 
@@ -6,11 +7,13 @@ class AVAIButton extends StatelessWidget {
   final bool secondary;
   final String label;
   final VoidCallback onPressed;
+  final AuthModel? authModel;
   const AVAIButton(
       {super.key,
       this.secondary = false,
       required this.label,
-      required this.onPressed});
+      required this.onPressed,
+      this.authModel});
 
   @override
   Widget build(BuildContext context) {
