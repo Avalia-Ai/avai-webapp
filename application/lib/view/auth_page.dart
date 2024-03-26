@@ -15,7 +15,10 @@ class AuthPage extends StatelessWidget {
   final bool register;
   final SupabaseClient client;
 
-  const AuthPage._({
+  var email = '';
+  var password = '';
+
+  AuthPage._({
     Key? key,
     this.register = false,
     required this.client,
@@ -62,7 +65,6 @@ class AuthPage extends StatelessWidget {
   }
 
   Widget buildIdentifiersInput(BuildContext context) {
-    final authProvider = Provider.of<AuthModel>(context, listen: false);
     return Column(
       children: [
         AVAITextInput(
@@ -70,14 +72,14 @@ class AuthPage extends StatelessWidget {
           placeholder: 'nome@ic.ufrj.br',
           allowNumbers: true,
           allowSpaces: false,
-          onChanged: (value) => authProvider.setEmail(value),
+          onChanged: (value) => email = value,
         ),
         const SizedBox(height: 24),
         AVAITextInput(
           label: 'Senha',
           placeholder: '••••••',
           isPasswordField: true,
-          onChanged: (value) => authProvider.setPassword(value),
+          onChanged: (value) => password = value,
         ),
       ],
     );
@@ -229,6 +231,13 @@ class AuthPage extends StatelessWidget {
                             AVAIButton(
                               label: 'Entrar',
                               onPressed: () async {
+                                final authProvider = Provider.of<AuthModel>(
+                                    context,
+                                    listen: false);
+
+                                authProvider.setEmail(this.email);
+                                authProvider.setPassword(this.password);
+
                                 final authModel = Provider.of<AuthModel>(
                                     context,
                                     listen: false);
